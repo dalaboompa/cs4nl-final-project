@@ -15,7 +15,9 @@ This dataset consists of posts and comments collected from the r/mcmaster subred
 - **Format**: The dataset is stored in CSV format, with three rows `id`, `text`, and `label`, and each row representing a single post or comment.
 - **Size**: `TODO: include number of distinct instances`
 
-## Annotation Guidelines
+## Data Annotation
+
+### Annotation Guideline
 Each text instance is labeled based on the emotional content it expresses. The labels are:
 - **A (Anger)**: Expresses annoyance or displeasure.
 - **D (Disgust)**: Shows strong disapproval or offense.
@@ -27,7 +29,7 @@ Each text instance is labeled based on the emotional content it expresses. The l
 
 ***See more details in the annotation instructions.***
 
-## Estimated Annotation Time
+### Estimated Annotation Time
 Annotating each data point takes approximately 10 seconds to 15 seconds. 
 
 ## Annotator Script Documentation
