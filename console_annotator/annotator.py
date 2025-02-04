@@ -1,6 +1,7 @@
 import pandas as pd
 from pathlib import Path
 
+# Define labels
 labels = {
     "A": "Anger",
     "D": "Disgust",
@@ -13,7 +14,7 @@ labels = {
 
 instructions = """
 Thank you for participating in our annotation task!
-This task involves labeling posts and comments from the r/mcmaster subreddit with an appropriate emotion category.
+This task involves labeling posts and comments from a dataset with an appropriate emotion category.
 Your job is to assign one of the following labels to each text, based on its semantic meaning and expressed emotion:
 
 Labels:
@@ -24,18 +25,27 @@ Labels:
     S - Sadness: Expresses negative emotions such as grief, disappointment, or helplessness.
     U - Surprise: Describes an unexpected or astonishing event.
     M - Ambiguous: Emotion is neutral, unclear, or mixed.
-You may also use lower-case letters for the labels.
+
+Note:
+    - You may enter the label in uppercase or lowercase.
+    - Please enter exactly one label per text.
 """
 
 data_col = "text"
-
-delimiter = "="*20
+delimiter = "=" * 20
 
 def main():
-    # Load dataset
-    my_data = pd.read_csv("mydata.csv")
-    my_data = my_data.reset_index()
-
+    # Prompt user for input file name
+    input_file = input("Enter the name of the input CSV file: ").strip()
+    
+    try:
+        # Load dataset
+        my_data = pd.read_csv(input_file)
+        my_data = my_data.reset_index()
+    except FileNotFoundError:
+        print(f"Error: The file '{input_file}' was not found.")
+        return
+    
     # Ensure output file does not overwrite existing files
     out_count = 0
     my_file = Path(f"output{out_count}.csv")
@@ -63,3 +73,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
