@@ -32,10 +32,10 @@ Each text instance is labeled based on the emotional content it expresses. The l
 ### Estimated Annotation Time
 Annotating each data point takes approximately 10 seconds to 20 seconds. So in total we need $20 \times 1380 = 27600s \approx 7.67h$ to annotate the entire dataset.
 
-## Annotation
+### How to Annotate
 Open the corresponding `mcmaster_reddit_part_{part#}.xlsx`. Feel free to resize the font or column/row size but please do not change the file structure. Put the corresponding label (one letter) to the "label" column. Save frequently.
 
-### Contact
+## Contact
 If you have any questions regarding the dataset or annotation process, please contact:
 
 | Team Member | Email |
