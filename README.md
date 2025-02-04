@@ -1,13 +1,15 @@
 # Emotion Recognition with r/mcmaster Subreddit posts/comments
 
-## Disclaimer on Sensitive Content
+## r/mcmaster Subreddit Dataset
+
+### Disclaimer on Sensitive Content
 > [!WARNING] 
 > This dataset contains user-generated content from Reddit. Some instances may include strong language, offensive remarks, or discussions of sensitive topics such as discrimination or violence. Annotators should be careful of potential emotional impact while working with the data. If you feel uncomfortable, please take necessary breaks and seek support if needed.
 
-## Dataset Overview
+### Dataset Overview
 This dataset consists of posts and comments collected from the r/mcmaster subreddit. The data is intended for emotion classification and annotation based on the semantic and emotional content of the text. The goal of this project is to categorize each data point into predefined emotion labels: Anger, Disgust, Fear, Happiness, Sadness, Surprise, or Ambiguous.
 
-## Data Collection
+### Data Collection
 - **Source**: The dataset was gathered from publicly available posts and comments on the r/mcmaster subreddit.
 - **Collection Methodology**: `TODO: please include details about how and when data was collected`
 - **Format**: The dataset is stored in CSV format, with three rows `id`, `text`, and `label`, and each row representing a single post or comment.
@@ -27,8 +29,6 @@ Each text instance is labeled based on the emotional content it expresses. The l
 
 ## Estimated Annotation Time
 Annotating each data point takes approximately 10 seconds to 15 seconds. 
-
----
 
 ## Annotator Script Documentation
 
