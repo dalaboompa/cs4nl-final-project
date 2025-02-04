@@ -11,9 +11,9 @@ This dataset consists of posts and comments collected from the r/mcmaster subred
 
 ### Data Collection
 - **Source**: The dataset was gathered from publicly available posts and comments on the r/mcmaster subreddit.
-- **Collection Methodology**: `TODO: please include details about how and when data was collected`
-- **Format**: The dataset is stored in CSV format, with three rows `id`, `text`, and `label`, and each row representing a single post or comment.
-- **Size**: `TODO: include number of distinct instances`
+- **Collection Methodology**: The dataset is collected using a crawler that calls Reddit API. The posts are collected via the `https://www.reddit.com/r/mcmaster/new.json` endpoint, and the comments of a post is collected via the `https://www.reddit.com/r/mcmaster/comments/{post_id}.json` endpoint. First, we collect as many posts as possible (Reddit allows us to get at most 1000 posts), and then only posts with more than 5 words are kept. Next, we randomly pick a post from these posts and collect their comments. Similarly, only comments with more than 5 words are collected. The collection stops once we have 1200 datapoints. Finally, the collected posts and comments are combined.
+- **Format**: The dataset is stored in XLSX format, with three rows `id`, `text`, and `label`, and each row representing a single post or comment.
+- **Size**: There are 1200 unique datapoints, and the first 15% of the dataset is duplicated so as the result we have $1200 \times 1.15 = 1380$ datapoints to annotate.
 
 ## Data Annotation
 
@@ -30,27 +30,10 @@ Each text instance is labeled based on the emotional content it expresses. The l
 ***See more details in the annotation instructions.***
 
 ### Estimated Annotation Time
-Annotating each data point takes approximately 10 seconds to 15 seconds. 
+Annotating each data point takes approximately 10 seconds to 20 seconds. So in total we need $20 \times 1380 = 27600s \approx 7.67h$ to annotate the entire dataset.
 
-## Annotator Script Documentation
-
-### `annotator.py`
-This script helps the annotation process for the r/mcmaster subreddit dataset.
-
-### Usage
-1. Run the script:
-   ```sh
-   python annotator.py 
-   ```
-2. Enter the name of the input CSV file when prompted.
-3. The script will display each text instance one at a time, prompting the annotator to assign a label.
-4. Enter the corresponding letter (A, D, F, H, S, U, or M) and press `Enter`.
-5. Labeled data will be saved to an output file (`outputX.csv`), where `X` is an incrementing number to avoid overwriting existing files.
-
-### Output Format
-The labeled data is stored in a CSV file with the following format:
-- **Index**: The original index from `mydata.csv`.
-- **Label**: The assigned emotion category (A, D, F, H, S, U, or M).
+## Annotation
+Open the corresponding `mcmaster_reddit_part_{part#}.xlsx`. Feel free to resize the font or column/row size but please do not change the file structure. Put the corresponding label (one letter) to the "label" column. Save frequently.
 
 ### Contact
 If you have any questions regarding the dataset or annotation process, please contact:
