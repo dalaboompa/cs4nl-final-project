@@ -17,6 +17,9 @@ This dataset consists of posts and comments collected from the r/mcmaster subred
 
 ## Data Annotation
 
+<details>
+    <summary>Instructions</summary>
+
 ### Annotation Guideline
 Each text instance is labeled based on the emotional content it expresses. The labels are:
 - **A (Anger)**: Expresses annoyance or displeasure.
@@ -34,6 +37,8 @@ Annotating each data point takes approximately 10 seconds to 20 seconds. So in t
 
 ### How to Annotate
 Open the corresponding `mcmaster_reddit_part_{part#}.xlsx`. Feel free to resize the font or column/row size but please do not change the file structure. Put the corresponding label (one letter) to the "label" column. Save frequently.
+
+</details>
 
 ## Contact
 If you have any questions regarding the dataset or annotation process, please contact:
