@@ -38,3 +38,22 @@ def merge_excel_files(data_dir, output_file, verbose=False):
 
 # Example usage
 # merge_excel_files("/path/to/data", "merged_output.xlsx")
+
+# a function that read all sheets from an excel file and return a single dataframe
+def read_all_sheets_to_dataframe(file_path):
+    """
+    Read all sheets from an Excel file and return a single DataFrame.
+    
+    Parameters:
+        file_path (str): The path to the Excel file.
+        
+    Returns:
+        pd.DataFrame: A DataFrame containing all data from all sheets.
+    """
+    # Read all sheets into a dictionary of DataFrames
+    all_sheets = pd.read_excel(file_path, sheet_name=None)
+    
+    # Concatenate all DataFrames into a single DataFrame
+    combined_df = pd.concat(all_sheets.values(), ignore_index=True)
+    
+    return combined_df
