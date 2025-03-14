@@ -1,46 +1,47 @@
 import os
+import re
 import pandas as pd
 
-def merge_excel_files(data_dir, output_file, verbose=False):
+def merge_excel_files(data_paths_list, output_file, verbose=False):
     """
-    Merge multiple Excel files into one, with each file as a separate sheet.
-    
-    Parameters:
-        data_dir (str): The directory containing the input .xlsx files.
-        output_file (str): The name of the output .xlsx file (including .xlsx extension).
+    Merge multiple Excel files specified in the data_paths_list into a single Excel file such that each 
+    Excel file corresponds to one sheet in the output Excel file. In particular, the name of each sheet 
+    should be 'part_*' extracted from the name of the input files.
     """
-    # Get all matching files
-    file_list = [f for f in os.listdir(data_dir) if f.startswith("mcmaster_reddit_part_") and f.endswith(".xlsx")]
-    
-    if not file_list:
-        print("No matching Excel files found in the directory.")
-        return
-
-    # Sort files to maintain order
-    file_list.sort()
-
-    # Create a writer object
-    output_path = os.path.join(data_dir, output_file)
-    with pd.ExcelWriter(output_path, engine="xlsxwriter") as writer:
-        for file in file_list:
-            file_path = os.path.join(data_dir, file)
-            sheet_name = file.replace("mcmaster_reddit_", "").replace(".xlsx", "")
+    # Create an ExcelWriter object using a context manager for proper resource handling.
+    with pd.ExcelWriter(output_file, engine='openpyxl') as writer:
+        for file_path in data_paths_list:
+            # Extract the file name from the path.
+            file_name = os.path.basename(file_path)
             
-            try:
-                df = pd.read_excel(file_path)
-                df.to_excel(writer, sheet_name=sheet_name, index=False)
-                if verbose:
-                    print(f"Added {file} as sheet: {sheet_name}")
-            except Exception as e:
-                print(f"Error reading {file}: {e}")
+            # Use regex to extract the substring matching 'part_[0-9]' from the file name.
+            match = re.search(r'(part_[0-9])', file_name)
+            if match:
+                sheet_name = match.group(1)
+            else:
+                # If no 'part_*' is found, use the file name without its extension.
+                sheet_name = os.path.splitext(file_name)[0]
+            
+            # Ensure the sheet name is valid:
+            # - Truncate to 31 characters (Excel's maximum sheet name length).
+            # - Replace illegal characters with an underscore.
+            sheet_name = sheet_name[:31]
+            for illegal_char in [':', '\\', '/', '?', '*', '[', ']']:
+                sheet_name = sheet_name.replace(illegal_char, '_')
+            
+            # Read the Excel file (default: reading the first sheet) into a DataFrame.
+            df = pd.read_excel(file_path)
+            if verbose:
+                print(f"Adding sheet '{sheet_name}' from file '{file_path}'")
+            
+            # Write the DataFrame to a new sheet in the merged Excel file.
+            df.to_excel(writer, sheet_name=sheet_name, index=False)
+    
     if verbose:
-        print(f"Successfully created {output_file} with {len(file_list)} sheets.")
-
-# Example usage
-# merge_excel_files("/path/to/data", "merged_output.xlsx")
+        print(f"Merged Excel file saved as '{output_file}'")
 
 # a function that read all sheets from an excel file and return a single dataframe
-def read_all_sheets_to_dataframe(file_path):
+def sheets_to_dataframe(file_path):
     """
     Read all sheets from an Excel file and return a single DataFrame.
     
